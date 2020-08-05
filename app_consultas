@@ -32,16 +32,15 @@ class _TelaprincipalState extends State<Telaprincipal> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:
-
-
-
-
+      
     );
   }
 }
+
 ---------------
 segundatela.dart
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TelaCadastro extends StatefulWidget {
   @override
@@ -51,6 +50,17 @@ class TelaCadastro extends StatefulWidget {
 class _TelaCadastroState extends State<TelaCadastro> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Form(
+      key: _formKey,
+      child:
+TextFormField(
+  // O validador recebe o texto digitado
+  validator: (value) {
+    if (value.isEmpty) {
+      return 'Informe o valor';
+    }
+  },
+);
+      )
   }
 }
