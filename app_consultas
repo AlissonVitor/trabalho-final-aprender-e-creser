@@ -1,66 +1,138 @@
 main
 import 'package:flutter/material.dart';
-import 'TelaCadastro.dart';
+import 'package:medicine/MyApp.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
 }
+
+
+---------------
+TelaCadastro.dart
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+// Create a Form widget.
+class MyCustomForm extends StatefulWidget {
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+
+// Create a corresponding State class.
+// This class holds data related to the form.
+class MyCustomFormState extends State<MyCustomForm> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a GlobalKey<FormState>,
+  // not a GlobalKey<MyCustomFormState>.
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'nome';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              onPressed: () {
+               
+                if (_formKey.currentState.validate()) {
+                 
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('Procesando')));
+                }
+              },
+              child: Text('Submit'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+============================
+MyApp.dart
+import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Telaprincipal(),
-    );
-  }
-}
-
-class Telaprincipal extends StatefulWidget {
-  @override
-  _TelaprincipalState createState() => _TelaprincipalState();
-}
-
-class _TelaprincipalState extends State<Telaprincipal> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar:
-      
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text("Medicine App"),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(23.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            myCardWidget(meuIcone: Icons.local_movies, meuTexto: "Consulta"),
+          ],
+        ),
+      ),
     );
   }
 }
 
----------------
-segundatela.dart
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+class myCardWidget extends StatelessWidget {
+  myCardWidget({this.meuIcone, this.meuTexto});
 
-class TelaCadastro extends StatefulWidget {
-  @override
-  _TelaCadastroState createState() => _TelaCadastroState();
-}
+  final IconData meuIcone;
+  final String meuTexto;
 
-class _TelaCadastroState extends State<TelaCadastro> {
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child:
-TextFormField(
-  // O validador recebe o texto digitado
-  validator: (value) {
-    if (value.isEmpty) {
-      return 'Informe o valor';
-    }
-  },
-);
-      )
+    return Container(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(meuIcone, size: 40.0, color: Colors.grey),
+              title: Text(
+                meuTexto,
+                style: TextStyle(fontSize: 20.0),
+              ),
+              subtitle: const Text(
+                  'Nome: Fulano, RG:40.002.892-2, SUS:4002, Idade:23, Sexo:M'),
+            ),
+            ButtonTheme.bar(
+              child: ButtonBar(
+                children: <Widget>[
+                  FlatButton(
+                    child: const Text('Aplicar'),
+                    onPressed: () {},
+                  ),
+                  FlatButton(
+                    child: const Text(''),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
+
