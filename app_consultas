@@ -1,76 +1,21 @@
 main
 import 'package:flutter/material.dart';
-import 'package:medicine/MyApp.dart';
+import 'dart:js';
 
 void main() {
+  MaterialApp(
+    routes: {
+      // When navigating to the "/" route, build the FirstScreen widget.
+      '/': (context) => MyApp(),
+      // When navigating to the "/second" route, build the SecondScreen widget.
+      '/second': (context) => TelaCadstro(),
+    },
+  );
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MyApp(),
+    home: LoginPage(),
   ));
 }
-
-
----------------
-TelaCadastro.dart
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-// Create a Form widget.
-class MyCustomForm extends StatefulWidget {
-  @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
-  }
-}
-
-// Create a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'nome';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-               
-                if (_formKey.currentState.validate()) {
-                 
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Procesando')));
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-============================
-MyApp.dart
-import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -107,21 +52,22 @@ class myCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: Icon(meuIcone, size: 40.0, color: Colors.grey),
               title: Text(
                 meuTexto,
                 style: TextStyle(fontSize: 20.0),
               ),
               subtitle: const Text(
-                  'Nome: Fulano, RG:40.002.892-2, SUS:4002, Idade:23, Sexo:M'),
+                  'Nome: Alek, RG:40.002.892-2, SUS:4002, Idade:23, Sexo:M'),
             ),
             ButtonTheme.bar(
               child: ButtonBar(
                 children: <Widget>[
                   FlatButton(
-                    child: const Text('Aplicar'),
-                    onPressed: () {},
-                  ),
+                      child: const Text('Marcar nova consulta'),
+                      onPressed: () {
+                        // Navigate to the second screen using a named route.
+                        Navigator.pushNamed(context, '/second');
+                      }),
                   FlatButton(
                     child: const Text(''),
                     onPressed: () {},
@@ -133,6 +79,69 @@ class myCardWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TelaCadstro extends StatefulWidget {
+  @override
+  _TelaCadstroState createState() => _TelaCadstroState();
+}
+
+class _TelaCadstroState extends State<TelaCadstro> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.blueGrey,
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  autofocus: true,
+                  style: new TextStyle(color: Colors.white, fontSize: 30),
+                  decoration: InputDecoration(
+                      labelText: "E-mail",
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+                Divider(),
+                TextFormField(
+                  autofocus: true,
+                  obscureText: true,
+                  style: new TextStyle(color: Colors.white, fontSize: 30),
+                  decoration: InputDecoration(
+                      labelText: "Senha",
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+                ButtonTheme(
+                  buttonColor: Colors.green,
+                  height: 60.0,
+                  child: RaisedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Entrar",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
 
