@@ -1,23 +1,73 @@
-main
 import 'package:flutter/material.dart';
-import 'dart:js';
 
 void main() {
-  MaterialApp(
-    routes: {
-      // When navigating to the "/" route, build the FirstScreen widget.
-      '/': (context) => MyApp(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
-      '/second': (context) => TelaCadstro(),
-    },
-  );
   runApp(new MaterialApp(
+    routes: {
+      "/": (context) => LoginPage(),
+      "/second": (context) => TelaCadstro(),
+      "/terseira": (context) => Tela(),
+    },
     debugShowCheckedModeBanner: false,
-    home: LoginPage(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                  autofocus: true,
+                  style: TextStyle(color: Colors.red, fontSize: 30),
+                  decoration: InputDecoration(
+                    labelText: "E-mail",
+                    labelStyle: TextStyle(color: Colors.red),
+                  )),
+              Divider(),
+              TextField(
+                  autofocus: true,
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(color: Colors.red, fontSize: 30),
+                  decoration: InputDecoration(
+                    labelText: "Senha do usuário",
+                    labelStyle: TextStyle(color: Colors.red),
+                  )),
+              Divider(),
+              ButtonTheme(
+                height: 60.0,
+                child: RaisedButton(
+                  onPressed: () => {Navigator.pushNamed(context, "/terseira")},
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  child: Text(
+                    "Logar",
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Tela extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,17 +106,15 @@ class myCardWidget extends StatelessWidget {
                 meuTexto,
                 style: TextStyle(fontSize: 20.0),
               ),
-              subtitle: const Text(
-                  'Nome: Alek, RG:40.002.892-2, SUS:4002, Idade:23, Sexo:M'),
             ),
             ButtonTheme.bar(
               child: ButtonBar(
                 children: <Widget>[
                   FlatButton(
-                      child: const Text('Marcar nova consulta'),
+                      child: const Text('Minhas Consultas'),
                       onPressed: () {
                         // Navigate to the second screen using a named route.
-                        Navigator.pushNamed(context, '/second');
+                        Navigator.pushNamed(context, "/second");
                       }),
                   FlatButton(
                     child: const Text(''),
@@ -90,58 +138,6 @@ class TelaCadstro extends StatefulWidget {
 class _TelaCadstroState extends State<TelaCadstro> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    Container();
   }
 }
-
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.blueGrey,
-        body: Padding(
-          padding: EdgeInsets.all(20),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  autofocus: true,
-                  style: new TextStyle(color: Colors.white, fontSize: 30),
-                  decoration: InputDecoration(
-                      labelText: "E-mail",
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-                Divider(),
-                TextFormField(
-                  autofocus: true,
-                  obscureText: true,
-                  style: new TextStyle(color: Colors.white, fontSize: 30),
-                  decoration: InputDecoration(
-                      labelText: "Senha",
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
-                ButtonTheme(
-                  buttonColor: Colors.green,
-                  height: 60.0,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Entrar",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
-  }
-}
-
